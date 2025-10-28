@@ -28,7 +28,7 @@ function CounterCard({ children }: { children: React.ReactNode }) {
   return (
     <Card>
       <CardHeader>
-        <h1 className="text-xl font-bold">React 19 Counter</h1>
+        <h1 className="text-xl font-bold">React 19 useState</h1>
       </CardHeader>
       <CardBody>
         <p className="text-gray-400 pb-4">

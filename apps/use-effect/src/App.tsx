@@ -22,7 +22,7 @@ function App() {
     <section className="max-w-md mx-auto min-h-[100dvh] py-10">
       <Card>
         <CardHeader>
-          <h1 className="text-xl font-bold">React 19 Counter</h1>
+          <h1 className="text-xl font-bold">React 19 useEffect</h1>
         </CardHeader>
         <CardBody>
           <p className="text-gray-400 pb-4">Check the console to see the effects.</p>
