@@ -1,73 +1,23 @@
-# React + TypeScript + Vite
+# useCallback Example
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+`useCallback` is a React Hook that lets you cache a function definition between re-renders. It returns a memoized version of the callback that only changes if one of its dependencies has changed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Official Documentation](https://react.dev/reference/react/useCallback)
 
-## React Compiler
+## What This Example Demonstrates
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This app shows how `useCallback` prevents a function from being recreated on every render unless its dependencies change. The `expensiveFunction` is memoized with `useCallback` and only depends on `multiplier`. 
 
-## Expanding the ESLint configuration
+When you:
+- **Click "Increment Count"** - The count state updates, but `expensiveFunction` is not recreated (because `multiplier` hasn't changed), so the `useEffect` doesn't re-run
+- **Change the multiplier input** - The `multiplier` dependency changes, causing `expensiveFunction` to be recreated, which triggers the `useEffect` to run
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Check the console to see that the expensive calculation only runs when the multiplier changes, not when count changes, even though both are used inside the function.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Key Concepts:**
+- Memoizing functions to maintain referential equality
+- Controlling when effects re-run by stabilizing their dependencies
+- Optimizing performance by preventing unnecessary function recreations
+- Understanding dependency arrays in `useCallback` and `useEffect`
